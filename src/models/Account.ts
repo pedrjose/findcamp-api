@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import * as bcrypt from "bcrypt";
 
-interface IAccount {
+export interface IAccount {
   email: string;
   password: string;
 }
