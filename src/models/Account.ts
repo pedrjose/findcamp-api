@@ -27,6 +27,6 @@ AccountSchema.pre("save", async function (next) {
   next();
 });
 
-const Account = mongoose.model<IAccount>("model", AccountSchema);
+const Account = mongoose.model<IAccount>("Account", AccountSchema);
 
 export default Account;

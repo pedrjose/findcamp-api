@@ -1,16 +1,25 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-interface IProfile {
+export interface IProfile {
+  userId: mongoose.Schema.Types.ObjectId;
   name: string;
   bio: string;
   photo: string;
+  college: string;
+  likes?: number;
+  connections?: number;
   instagram?: string;
   linkedin?: string;
-  facebook?: string;
+  twitter?: string;
 }
 
 const ProfileSchema: Schema = new Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Account",
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -23,17 +32,27 @@ const ProfileSchema: Schema = new Schema({
     type: String,
     required: true
   },
+  college: {
+    type: String,
+    required: true
+  },
+  likes: {
+    type: Number
+  },
+  connections: {
+    type: Number
+  },
   instagram: {
     type: String
   },
   linkedin: {
     type: String
   },
-  facebook: {
+  twitter: {
     type: String
   }
 });
 
-const Profile = mongoose.model<IProfile>("model", ProfileSchema);
+const Profile = mongoose.model<IProfile>("Profile", ProfileSchema);
 
 export default Profile;

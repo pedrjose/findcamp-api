@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Account from "../models/Account";
 import { IAccount } from "../models/Account";
 
@@ -6,3 +7,6 @@ export const createAccountRepository = (account: IAccount) =>
 
 export const findAccountIdByEmail = (email: string) =>
   Account.findOne({ email: email });
+
+export const findAccountById = (userId: Object) =>
+  Account.findOne({ _id: userId });
