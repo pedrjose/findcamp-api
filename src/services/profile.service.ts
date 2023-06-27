@@ -1,6 +1,14 @@
-import { IProfile } from "../models/Profile";
+import { IProfile, IUpdate } from "../models/Profile";
 
-import { createProfileRepository } from "../repositories/profile.repository";
+import {
+  findAccountById,
+  findAccountIdByEmail
+} from "../repositories/account.repository";
+
+import {
+  createProfileRepository,
+  updateProfileRepository
+} from "../repositories/profile.repository";
 
 export const createProfileService = async ({
   userId,
@@ -14,6 +22,10 @@ export const createProfileService = async ({
 }: IProfile) => {
   if (!userId || !name || !bio || !photo || !college)
     throw new Error("Submit all required fields!");
+
+  const verifyId = await findAccountById(userId);
+
+  if (!verifyId) throw new Error("Incorrect account ID!");
 
   const likes = 0;
   const connections = 0;
@@ -38,4 +50,32 @@ export const createProfileService = async ({
   if (!registerProfile) throw new Error("Register profile failed. Try again!");
 
   return { message: "Profile created successfully!" };
+};
+
+export const updateProfileService = async (newProfile: IUpdate) => {
+  const { email, name, bio, photo, college, instagram, linkedin, twitter } =
+    newProfile;
+
+  const findAccount = await findAccountIdByEmail(email);
+
+  if (!findAccount) throw new Error("Email verify failed. Try again!");
+
+  if (
+    !name &&
+    !bio &&
+    !photo &&
+    !college &&
+    !instagram &&
+    !linkedin &&
+    !twitter
+  )
+    throw new Error("Submit at least one field to updating!");
+
+  const profileId = findAccount._id;
+
+  const updateProfile = await updateProfileRepository(profileId, newProfile);
+
+  if (!updateProfile) new Error("Update profile error. Try again!");
+
+  return { message: "Profile updated successfully", status: true };
 };

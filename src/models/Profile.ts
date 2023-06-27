@@ -14,10 +14,21 @@ export interface IProfile {
   twitter?: string;
 }
 
+export interface IUpdate {
+  name?: string;
+  bio?: string;
+  photo?: string;
+  college?: string;
+  instagram?: string;
+  linkedin?: string;
+  twitter?: string;
+  email: string;
+}
+
 const ProfileSchema: Schema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Account",
+    unique: true,
     required: true
   },
   name: {
