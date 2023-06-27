@@ -15,4 +15,4 @@ app.use(express.json());
 app.use("/account", accountRouter);
 app.use("/profile", profileRouter);
 
-app.listen(port, () => console.log(`\nSERVER RUNNING ON ${port} PORT!\n`));
+app.listen(port, () => console.log(`\nSERVER RUNNING ON ${port} PORT!`));

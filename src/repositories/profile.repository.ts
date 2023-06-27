@@ -11,3 +11,6 @@ export const updateProfileRepository = (
     { userId: profileId },
     { name, bio, photo, college, instagram, linkedin, twitter }
   );
+
+export const findProfileByIdRepository = (accountId: Object) =>
+  Profile.findOne({ userId: accountId });
