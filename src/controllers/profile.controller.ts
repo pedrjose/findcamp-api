@@ -3,7 +3,8 @@ import { IProfile, IUpdate } from "../models/Profile";
 
 import {
   createProfileService,
-  updateProfileService
+  updateProfileService,
+  likeProfileService
 } from "../services/profile.service";
 
 export const createProfileController = async (req: Request, res: Response) => {
@@ -63,6 +64,17 @@ export const updateProfileController = async (req: Request, res: Response) => {
     const updating = await updateProfileService(newProfile);
 
     res.send(updating);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+export const likeProfileController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const like = await likeProfileService(id);
+
+    res.send(like);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

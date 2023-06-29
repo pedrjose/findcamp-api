@@ -7,7 +7,10 @@ import {
 
 import {
   createProfileRepository,
-  updateProfileRepository
+  updateProfileRepository,
+  likeProfileRepository,
+  registerNotificationRepository,
+  findProfileByIdRepository
 } from "../repositories/profile.repository";
 
 export const createProfileService = async ({
@@ -78,4 +81,18 @@ export const updateProfileService = async (newProfile: IUpdate) => {
   if (!updateProfile) new Error("Update profile error. Try again!");
 
   return { message: "Profile updated successfully", status: true };
+};
+
+export const likeProfileService = async (id: String) => {
+  const profile = await findProfileByIdRepository(id);
+
+  if (!profile) throw new Error("Cannot like this profile!");
+
+  const profileLikes = profile.likes + 1;
+
+  await likeProfileRepository(id, profileLikes);
+
+  const notification = `Your profile was liked at ${new Date()}`;
+
+  await registerNotificationRepository(id, notification);
 };

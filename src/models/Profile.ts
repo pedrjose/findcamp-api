@@ -12,6 +12,8 @@ export interface IProfile {
   instagram?: string;
   linkedin?: string;
   twitter?: string;
+  historic?: mongoose.Schema.Types.ObjectId[];
+  notifications?: string[];
 }
 
 export interface IUpdate {
@@ -61,6 +63,12 @@ const ProfileSchema: Schema = new Schema({
   },
   twitter: {
     type: String
+  },
+  historic: {
+    type: Array<mongoose.Schema.Types.ObjectId>
+  },
+  notifications: {
+    type: Array<String>
   }
 });
 
